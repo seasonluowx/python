@@ -1,13 +1,6 @@
-import os
-
-import sys
-
 import time
-crupath = sys.path[0]
-testCasesPath = os.path.join(crupath, 'test-cases/')
-cases = []
-cases.append(os.path.join(testCasesPath,"1.0.10_login.py"))
-cases.append(os.path.join(testCasesPath,"1.0.1_publish.py"))
+from cases.login import Login
+from cases.publish import PublishMedia
 # cases.append(os.path.join(testCasesPath,"1.0.2_comments.py"))
 # cases.append(os.path.join(testCasesPath,"1.0.4_like.py"))
 # cases.append(os.path.join(testCasesPath,"1.0.5_follow.py"))
@@ -26,18 +19,14 @@ cases.append(os.path.join(testCasesPath,"1.0.1_publish.py"))
 # cases.append(os.path.join(testCasesPath, "2.0.0_firmware_list.py"))
 
 
-
 def Start():
     now_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     # 记录开始时间
-    with open(os.path.join(crupath, 'time.txt'), 'w') as fdm:
+    with open('time.txt', 'w') as fdm:
         fdm.write(str(now_time))
 
-    for i in range(len(cases)):
-        os.system("python " + cases[i])
-    endtest = os.path.join(crupath, "endtest.py")
-    os.system("python " + endtest)
-
+    Login().runCase()
+    PublishMedia().runCase()
 
 if __name__ == "__main__":
     Start()

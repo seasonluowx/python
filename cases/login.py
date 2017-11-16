@@ -8,7 +8,7 @@ from resources import testconfig
 from util import datetimeUtil
 
 crupath = sys.path[0]
-testCasesPath = os.path.join(crupath, 'test-cases')
+testCasesPath = os.path.join(crupath, 'cases')
 
 class Login():
 	def __init__(self):

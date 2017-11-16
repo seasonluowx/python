@@ -11,7 +11,7 @@ class PublishMedia():
         self.server_sns = testconfig.configs.server_sns
         self.ModuleName = "one"
 
-    def run_case(self):
+    def runCase(self):
         persons = testconfig.configs.persons
         run_case = False
         isRunTag = False
@@ -349,7 +349,7 @@ class PublishMedia():
 
 def main():
     case = PublishMedia()
-    case.run_case()
+    case.runCase()
 
 
 if __name__ == "__main__":
