@@ -1,4 +1,8 @@
 import time
+from datetime import datetime
+
+import requests
+
 from cases.login import Login
 from cases.publish import PublishMedia
 # cases.append(os.path.join(testCasesPath,"1.0.2_comments.py"))
@@ -20,10 +24,9 @@ from cases.publish import PublishMedia
 
 
 def Start():
-    now_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
     # 记录开始时间
-    with open('time.txt', 'w') as fdm:
-        fdm.write(str(now_time))
+    with open('logs/time.txt', 'w') as fdm:
+        fdm.write(str(datetime.utcnow()))
 
     Login().runCase()
     PublishMedia().runCase()

@@ -1,6 +1,9 @@
 import os
 import sys
+
 from resources import testconfig
+from util import fileUtil
+from cases import userInfo
 
 crupath = sys.path[0]
 import time
@@ -8,17 +11,17 @@ import time
 
 class PublishMedia():
     def __init__(self):
-        self.server_sns = testconfig.configs.server_sns
+        self.server_sns=testconfig.configs['server_sns']
         self.ModuleName = "one"
 
     def runCase(self):
-        persons = testconfig.configs.persons
+        persons = testconfig.configs["persons"]
         run_case = False
         isRunTag = False
         isRunClub = False
         pixelLevel = 0
 
-        userId = self.get_pid()
+        userId = fileUtil.get_pid()
         if userId == 'userId login fail!':
             pid = persons[0]
             self.fdm = open(os.path.join(crupath, 'userId.txt'), 'w')
@@ -29,7 +32,7 @@ class PublishMedia():
 
         if True:
             # 发布影响个人信息列表===========1.0.1——1======================
-            userInfo_init = self.ants_get_user_info(pid, 'shares', pid)
+            userInfo_shares = userInfo.ants_get_user_info(pid, 'shares')
 
             # 发布影响我关注的人发布的媒体列表
             isFollowListEnd = self.ants_fllowList(pid, 1, persons[1])
@@ -264,13 +267,13 @@ class PublishMedia():
 
                 # 发布影响个人信息列表==========1.0.1——1.7===================
             userInfo_time1 = self.get_now_time()
-            userInfo = self.ants_get_user_info(pid, 'shares', pid)
-            print(userInfo)
+            userInfo_shares_aft = self.ants_get_user_info(pid, 'shares', pid)
+            print(userInfo_shares_aft)
             userInfo_time2 = self.get_now_time()
-            if userInfo == -1 or userInfo == -100:
+            if userInfo_shares_aft == -1 or userInfo_shares_aft == -100:
                 self.write_str("1.0.1-1.10 发布媒体之后,个人信息列表出现异常了")
                 self.write_email_log("1.0.1-1.10", "发布媒体之后,个人信息列表出现异常了", "error")
-            elif userInfo_init == (userInfo - 1):
+            elif userInfo_shares == (userInfo_shares_aft - 1):
                 self.write_str(u"1.0.1-1.10 发布媒体之后,发布影响个人信息列表 success,耗时" + str(
                     self.get_time_long(userInfo_time1, userInfo_time2)))
                 self.write_email_log("1.0.1-1.10",
